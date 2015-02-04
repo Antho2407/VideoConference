@@ -71,4 +71,41 @@ angular.module('publicApp')
         }
         return $sce.trustAsResourceUrl(vidSrc);
       };
+
+
+    // Messages, client info & sending
+    $scope.messages = [];
+    $scope.sendMessage = function () {
+
+      $scope.messages.push({
+            avatar: "../images/yeoman.png",
+            text: $scope.messageText,
+            side: 'right'
+        });         
+      $scope.$apply();     
+
+      // Animate
+      $("#viewport-content").animate({
+          bottom: $("#viewport-content").height() - $("#viewport").height()
+      }, 250);
+
+        Room.emit('sendMessageToRoom',$scope.messageText);
+        $scope.messageText = "";       
+    };
+
+    // Occurs when we receive chat messages
+    Room.on('sendMessageToRoom', function (p){
+
+      $scope.messages.push({
+            avatar: "../images/avatar.png",
+            text: p,
+            side: 'left'
+        });         
+      $scope.$apply();     
+
+      // Animate
+      $("#viewport-content").animate({
+          bottom: $("#viewport-content").height() - $("#viewport").height()
+      }, 250);
+    });
   });
