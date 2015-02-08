@@ -1,13 +1,24 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name publicApp.controller:MainCtrl
+ * @description
+ * # MainCtrl
+ * Controller of the publicApp
+ */
+angular.module('publicApp')
+  .controller('MapCtrl', function ($scope) {
+
 var displayCoords, myAddress;
 
-//var socket = io.connect();
+var socket = io.connect(),
+        connected = false;
 
 var nbLocations;
-var currentRoomMap;
+var currentRoom;
 
-var socketMap;
-
-/*socket.on('getPseudo', function (){
+socket.on('getPseudo', function (){
 	bootbox.prompt({
       title: "Quel est votre pseudo",
       value: "Inconnu",
@@ -29,7 +40,7 @@ socket.on('getLocation', function (room){
 socket.on('newPositions', function (positions){
 	displayCoords.innerHTML = "Positions des clients <br />" ;
 	positions.forEach(displayCoordinates);
-});*/
+});
 
 function getLocation() {
 	console.log("GET LOCATION");
@@ -51,8 +62,7 @@ function displayCoordinates(element, index, array) {
 
 // Called when position is available
 function showPosition(position) {
-	console.log("POSITION" +position.coords.latitude);
-	socketMap.emit('sendPosition', position.coords, currentRoomMap);
+	socket.emit('sendPosition', position.coords, currentRoom);
 	//displayCoords.innerHTML = "Latitude: " + position.coords.latitude
 	//		+ "<br />Longitude: " + position.coords.longitude;
 }
@@ -106,3 +116,6 @@ function showOnGoogleMap(latlng) {
 				}
 			});
 }
+
+
+  });

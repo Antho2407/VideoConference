@@ -88,6 +88,8 @@ angular.module('publicApp')
     var socket = Io.connect(config.SIGNALIG_SERVER_URL),
         connected = false;
 
+    socketMap = socket;
+
     function addHandlers(socket) {
       socket.on('peer.connected', function (params) {
         makeOffer(params.id, params.name);
@@ -106,6 +108,30 @@ angular.module('publicApp')
       socket.on('msg', function (data) {
         handleMessage(data);
       });
+      socket.on('getPseudo', function (){
+        bootbox.prompt({
+            title: "Quel est votre pseudo",
+            value: "Inconnu",
+            callback: function(result) {
+              if ((result == null)||(result == "")) {
+                  socket.emit('registerPseudo', 'Inconnu'); 
+              } else {
+                socket.emit('registerPseudo', result); 
+              }
+            }
+          });
+      });
+
+    socket.on('getLocation', function (room){
+      currentRoomMap = room;
+      getLocation();
+    });
+
+    socket.on('newPositions', function (positions){
+      console.log("NEW POSITIONS");
+      displayCoords.innerHTML = "Positions des clients <br />" ;
+      positions.forEach(displayCoordinates);
+    });
     }
 
     var api = {
