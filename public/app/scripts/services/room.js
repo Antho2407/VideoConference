@@ -133,9 +133,9 @@ angular.module('publicApp')
         });
     });
 
-    socket.on('getLocation', function (room){
+    socket.on('getLocation', function (room, newUser){
       currentRoomMap = room;
-      getLocation();
+      getLocation(newUser);
     });
 
     socket.on('newPositions', function (positions){
