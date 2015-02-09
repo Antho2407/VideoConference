@@ -4,3 +4,4 @@ var config = require('./config/config.json'),
 config.PORT = process.env.PORT || config.PORT;
 
 server.run(config);
+
