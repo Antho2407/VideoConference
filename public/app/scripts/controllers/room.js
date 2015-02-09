@@ -108,6 +108,63 @@ angular.module('publicApp')
         return $sce.trustAsResourceUrl(vidSrc);
       };
 
+      var CLIENT_ID = '779716103918-mjv16b6fbcp4afotr13pecgnc95aq2at.apps.googleusercontent.com';
+      var SCOPES = 'https://www.googleapis.com/auth/drive';
+
+      /**
+       * Called when the client library is loaded to start the auth flow.
+       */
+      $scope.handleClientLoad = function() {
+        window.setTimeout(checkAuth, 1);
+      }
+
+      /**
+       * Check if the current user has authorized the application.
+       */
+      $scope.checkAuth = function() {
+        gapi.auth.authorize(
+            {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
+            handleAuthResult);
+      }
+
+      /**
+       * Called when authorization server replies.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      $scope.handleAuthResult = function(authResult) {
+        var authButton = document.getElementById('authorizeButton');
+        var filePicker = document.getElementById('filePicker');
+        authButton.style.display = 'none';
+        filePicker.style.display = 'none';
+        if (authResult && !authResult.error) {
+          // Access token has been successfully retrieved, requests can be sent to the API.
+          filePicker.style.display = 'block';
+          filePicker.onchange = uploadFile;
+        } else {
+          // No access token could be retrieved, show the button to start the authorization flow.
+          authButton.style.display = 'block';
+          authButton.onclick = function() {
+              gapi.auth.authorize(
+                  {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+                  handleAuthResult);
+          };
+        }
+      }
+
+      /**
+       * Start the file upload.
+       *
+       * @param {Object} evt Arguments from the file selector.
+       */
+      $scope.uploadFile = function(evt) {
+        gapi.client.load('drive', 'v2', function() {
+          var file = evt.target.files[0];
+          insertFile(file);
+        });
+      }
+
+
         /**
        * Insert new file.
        *
@@ -115,9 +172,9 @@ angular.module('publicApp')
        * @param {Function} callback Function to call when the request is complete.
        */
       $scope.insertFile = function(fileData, callback) {
-        const boundary = '-------314159265358979323846';
-        const delimiter = "\r\n--" + boundary + "\r\n";
-        const close_delim = "\r\n--" + boundary + "--";
+        var boundary = '-------314159265358979323846';
+        var delimiter = "\r\n--" + boundary + "\r\n";
+        var close_delim = "\r\n--" + boundary + "--";
 
         var reader = new FileReader();
         reader.readAsBinaryString(fileData);
