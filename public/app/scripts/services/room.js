@@ -163,6 +163,9 @@ angular.module('publicApp')
       sendMessage : function (message, name) {
             socket.emit('sendMessageToRoom', message, currentName);
       },
+      sendFichierPartage : function (params) {
+            socket.emit('sendFichierToRoom', params);
+      },
       joinRoom: function (r) {
         if (!connected) {
           socket.emit('init', { room: r }, function (roomid, id, name, tabUsers) {
