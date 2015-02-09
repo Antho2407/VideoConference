@@ -7,10 +7,10 @@ body
 }
 
 #browser-window{
-	background: url("../images/background.png") ;
-	height: 538px;
-	width: 335px;
-	padding: 49px 25px 10px 25px;
+	background-color: grey;
+	height: 500px;
+	width: 600px;
+	padding: 10px 10px 10px 10px;
 	margin: auto;
 	position:relative;
 }
