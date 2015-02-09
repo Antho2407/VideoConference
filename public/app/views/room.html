@@ -23,26 +23,29 @@
 <br>
 
 <div id="browser-window">
-        <div id="viewport">
-            <div id="viewport-content">
-                <div class="bubble-container" ng-repeat="m in messages">
-                    <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
-                    <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
-                </div>
-            </div>
+  <div id="viewport">
+    <div id="viewport-content">
+        <div class="bubble-container" ng-repeat="m in messages">
+            <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
+            <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
         </div>
-
-        <form class="row row-chat" ng-submit="sendMessage()" href="javascript:void(0)">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="messageText" placeholder="Type your message" />
-
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </span>
-            </div>
-
-        </form>
     </div>
+  </div>
+
+  <form class="row row-chat" ng-submit="sendMessage()" href="javascript:void(0)">
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="messageText" placeholder="Type your message" />
+
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </span>
+    </div>
+  </form>
+</div>
+
+   <!--Add a file picker for the user to start the upload process -->
+  <input type="file" id="filePicker" style="display: none" />
+  <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
 
 <!--<script src='scripts/map.js'></script>-->
 <script>
