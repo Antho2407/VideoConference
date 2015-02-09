@@ -14,22 +14,21 @@ function getLocation(newUser) {
 		user = newUser;
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
-		displayCoords.innerHTML = "Geolocation API not supported by your browser.";
+		//displayCoords.innerHTML = "Geolocation API not supported by your browser.";
+		bootbox.alert("Erreur MAP", function() {
+		  bootbox.show("API de geolocalisation non supportée par votre navigateur");
+		});
 	}
 }
 
 function displayCoordinates(element, index, array) {
 	nbLocations ++;
-	displayCoords.innerHTML += "Client " + element.nameClient + "<br /> Latitude: " + element.latitude
-			+ "<br />Longitude: " + element.longitude + "<br />";
 	showOnGoogleMap(new google.maps.LatLng(element.latitude,
 			element.longitude), element.nameClient);
 }
 
 function newCoordinates(position) {
 	nbLocations ++;
-	displayCoords.innerHTML += "Client " + position.nameClient + "<br /> Latitude: " + position.latitude
-			+ "<br />Longitude: " + position.longitude + "<br />";
 	showOnGoogleMap(new google.maps.LatLng(position.latitude,
 			position.longitude), position.nameClient);
 }
@@ -37,8 +36,6 @@ function newCoordinates(position) {
 // Called when position is available
 function showPosition(position) {
 	socketMap.emit('sendPosition', position.coords, currentRoomMap, user);
-	//displayCoords.innerHTML = "Latitude: " + position.coords.latitude
-	//		+ "<br />Longitude: " + position.coords.longitude;
 }
 
 var geocoder;
@@ -47,9 +44,6 @@ var infowindow = new google.maps.InfoWindow();
 var marker;
 
 function initialize() {
-	displayCoords = document.getElementById("msg");
-	myAddress = document.getElementById("address");
-
 	nbLocations = 0;
 
 	geocoder = new google.maps.Geocoder();
@@ -78,8 +72,8 @@ function showOnGoogleMap(latlng, name) {
 						});
 
 						var boxText = document.createElement("div");
-				        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-				        boxText.innerHTML = "Position de " + name + " et sa petite adresse : \n" + results[1].formatted_address;
+				        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: grey; padding: 5px;";
+				        boxText.innerHTML = "Position de " + name + "<br> Adresse :" + results[1].formatted_address;
 
 				        var myOptions = {
 							 content: boxText
@@ -91,6 +85,7 @@ function showOnGoogleMap(latlng, name) {
 							  //background-color: "grey"
 							  opacity: 0.75
 							  ,width: "280px"
+							  ,height: "280px"
 							 }
 							,closeBoxMargin: "10px 2px 2px 2px"
 							,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
@@ -100,14 +95,15 @@ function showOnGoogleMap(latlng, name) {
 							,enableEventPropagation: false
 						};
 
-						var info_box = new InfoBox(myOptions);
+						var info_box = new InfoBubble(myOptions);
+						info_box.open(map, marker);
 
 						//info_box.setContent("Position de " + name + " et sa petite adresse : \n" + results[1].formatted_address);
 						//infowindow.open(map, marker);
 
 						google.maps.event.addListener(marker, 'click', function() {
 						    //infowindow.open(map,marker);
-						    info_box.open(theMap, marker);
+						    info_box.open(map, marker);
 						  });
 
 					} else {

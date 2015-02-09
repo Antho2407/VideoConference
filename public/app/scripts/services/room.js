@@ -139,7 +139,6 @@ angular.module('publicApp')
     });
 
     socket.on('newPositions', function (positions){
-      displayCoords.innerHTML = "Positions des clients <br />" ;
       positions.forEach(displayCoordinates);
     });
 
@@ -148,8 +147,8 @@ angular.module('publicApp')
     });
 
     // Occurs when we receive chat messages
-    socket.on('messageSent', function (data){
-      api.trigger('peer.messageSent', [data]);
+    socket.on('messageSent', function (data, name){
+      api.trigger('peer.messageSent', [{data:data, name:name}]);
     });
 
   };
@@ -161,8 +160,8 @@ angular.module('publicApp')
             name: name
             });
       },
-      sendMessage : function (message) {
-            socket.emit('sendMessageToRoom', message);
+      sendMessage : function (message, name) {
+            socket.emit('sendMessageToRoom', message, currentName);
       },
       joinRoom: function (r) {
         if (!connected) {

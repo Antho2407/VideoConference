@@ -59,11 +59,10 @@ angular.module('publicApp')
       });
     });
 
-    Room.on('peer.messageSent', function (data) {
-      console.log('MESSAGE SENT' + data);
+    Room.on('peer.messageSent', function (params) {
      $scope.messages.push({
             avatar: "../images/avatar.png",
-            text: data,
+            text: params.name + " : " + params.data,
             side: 'left'
         });         
       $scope.$apply();     
@@ -78,7 +77,7 @@ angular.module('publicApp')
 
       $scope.messages.push({
            avatar: "../images/yeoman.png",
-            text: $scope.messageText,
+            text: "MOI MEME : " + $scope.messageText,
             side: 'right'
         });         
       $scope.$apply();     
