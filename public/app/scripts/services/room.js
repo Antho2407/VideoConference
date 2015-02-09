@@ -110,17 +110,28 @@ angular.module('publicApp')
       });
       socket.on('getPseudo', function (){
         bootbox.prompt({
-            title: "Quel est votre pseudo",
-            value: "Inconnu",
-            callback: function(result) {
-              if ((result == null)||(result == "")) {
-                  socket.emit('registerPseudo', 'Inconnu'); 
-              } else {
-                socket.emit('registerPseudo', result); 
-              }
+          title: "Quel est votre pseudo ?",
+          closeButton: false,
+          value: "Gilbert 65 ans",
+          callback: function(result) {
+                    if ((result == null)||(result == "")) {
+                        socket.emit('registerPseudo', 'Inconnu'); 
+                    } else {
+                      socket.emit('registerPseudo', result); 
+                    }
+              },
+          buttons: {
+            confirm: {   
+              label: "Chatter !",
+              className: "btn-success"
+            },
+            cancel: {   
+              label: "Fuir",
+              className: "btn-danger"
             }
-          });
-      });
+          }
+        });
+    });
 
     socket.on('getLocation', function (room){
       currentRoomMap = room;
@@ -128,18 +139,30 @@ angular.module('publicApp')
     });
 
     socket.on('newPositions', function (positions){
-      console.log("NEW POSITIONS");
       displayCoords.innerHTML = "Positions des clients <br />" ;
       positions.forEach(displayCoordinates);
     });
-    }
+
+    socket.on('newPosition', function (position){
+      newCoordinates(position);
+    });
+
+    // Occurs when we receive chat messages
+    socket.on('messageSent', function (data){
+      api.trigger('peer.messageSent', [data]);
+    });
+
+  };
 
     var api = {
       newUser : function (id, name, tabUsers) {
             $rootScope.users.push({
             id: id,
             name: name
-      });
+            });
+      },
+      sendMessage : function (message) {
+            socket.emit('sendMessageToRoom', message);
       },
       joinRoom: function (r) {
         if (!connected) {

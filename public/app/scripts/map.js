@@ -7,32 +7,7 @@ var currentRoomMap;
 
 var socketMap;
 
-/*socket.on('getPseudo', function (){
-	bootbox.prompt({
-      title: "Quel est votre pseudo",
-      value: "Inconnu",
-      callback: function(result) {
-        if ((result == null)||(result == "")) {
-          	socket.emit('registerPseudo', 'Inconnu'); 
-        } else {
-        	socket.emit('registerPseudo', result); 
-        }
-      }
-    });
-});
-
-socket.on('getLocation', function (room){
-  currentRoom = room;
-  getLocation();
-});
-
-socket.on('newPositions', function (positions){
-	displayCoords.innerHTML = "Positions des clients <br />" ;
-	positions.forEach(displayCoordinates);
-});*/
-
 function getLocation() {
-	console.log("GET LOCATION");
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
@@ -41,7 +16,6 @@ function getLocation() {
 }
 
 function displayCoordinates(element, index, array) {
-	console.log("NBLOC"+nbLocations);
 	nbLocations ++;
 	displayCoords.innerHTML += "Client " + index + "<br /> Latitude: " + element.latitude
 			+ "<br />Longitude: " + element.longitude + "<br />";
@@ -49,9 +23,16 @@ function displayCoordinates(element, index, array) {
 			element.longitude));
 }
 
+function newCoordinates(position) {
+	nbLocations ++;
+	displayCoords.innerHTML += "Client " + nbLocations + "<br /> Latitude: " + position.latitude
+			+ "<br />Longitude: " + position.longitude + "<br />";
+	showOnGoogleMap(new google.maps.LatLng(position.latitude,
+			position.longitude));
+}
+
 // Called when position is available
 function showPosition(position) {
-	console.log("POSITION" +position.coords.latitude);
 	socketMap.emit('sendPosition', position.coords, currentRoomMap);
 	//displayCoords.innerHTML = "Latitude: " + position.coords.latitude
 	//		+ "<br />Longitude: " + position.coords.longitude;
@@ -90,7 +71,7 @@ function showOnGoogleMap(latlng) {
 						marker = new google.maps.Marker({
 							position : latlng,
 							map : map,
-							draggable: true
+							draggable: true,
 						});
 						infowindow.setContent(results[1].formatted_address);
 						infowindow.open(map, marker);
