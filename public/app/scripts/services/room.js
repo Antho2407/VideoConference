@@ -166,7 +166,8 @@ angular.module('publicApp')
       sendFichierPartage : function (params) {
             socket.emit('sendFichierToRoom', params);
       },
-      joinRoom: function (r) {
+      joinRoom: function (r, pseudo) {
+        socket.emit('registerPseudo', pseudo); 
         if (!connected) {
           socket.emit('init', { room: r }, function (roomid, id, name, tabUsers) {
             currentId = id;
@@ -177,7 +178,8 @@ angular.module('publicApp')
           connected = true;
         }
       },
-      createRoom: function () {
+      createRoom: function (pseudo) {
+        socket.emit('registerPseudo', pseudo); 
         var d = $q.defer();
         socket.emit('init', null, function (roomid, id, name, tabUsers) {
           d.resolve(roomid);

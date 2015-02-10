@@ -23,8 +23,18 @@ angular
         templateUrl: 'views/room.html',
         controller: 'RoomCtrl'
       })
+      .when('/connect/', {
+        templateUrl: 'views/connection.html',
+        controller: 'ConnectCtrl'
+      })
+      .when('/connect/:roomId', {
+        templateUrl: 'views/connection.html',
+        controller: 'ConnectCtrl'
+      })
       .otherwise({
-        redirectTo: '/room'
+        //redirectTo: '/room'
+        templateUrl: 'views/connection.html',
+        controller: 'ConnectCtrl'
       });
   });
 
