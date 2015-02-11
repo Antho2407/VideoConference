@@ -99,6 +99,7 @@ angular.module('publicApp')
           name: params.name
         });
       });
+
       socket.on('peer.disconnected', function (data) {
         api.trigger('peer.disconnected', [data]);
         $rootScope.users = $rootScope.users.filter(function (u) {
@@ -155,6 +156,12 @@ angular.module('publicApp')
       api.trigger('peer.messageSent', [{data:data, name:name}]);
     });
 
+    socket.on('newFichierPartage',function(data){
+      console.log("cote client : " + data[0].name);
+      console.log("cote client : " + data[0].url);
+      console.log("cote client : " + data[0].roomId);
+    });
+
   };
 
     var api = {
@@ -168,7 +175,9 @@ angular.module('publicApp')
             socket.emit('sendMessageToRoom', message, currentName);
       },
       sendFichierPartage : function (params) {
+            params.roomId = roomId;;
             socket.emit('sendFichierToRoom', params);
+
       },
       joinRoom: function (r, pseudo) {
         socket.emit('registerPseudo', pseudo); 

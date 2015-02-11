@@ -163,7 +163,20 @@ angular.module('publicApp')
       $scope.uploadFile = function(evt) {
         gapi.client.load('drive', 'v2', function() {
           var file = evt.target.files[0];
-          $scope.insertFile(file);
+          console.log("test");
+          $scope.insertFile(file, function(name, url){
+                    if(arguments.length ==0){
+                        console.log("error uploading file");
+                    }else{
+                      var params = {};
+                      params.name = name; 
+                      params.url = url; 
+                      params.roomId = "";
+                      
+                      Room.sendFichierPartage(params);
+                    }
+                    
+                });
         });
       };
 
@@ -201,39 +214,34 @@ angular.module('publicApp')
               base64Data +
               close_delim;
 
-          var request = gapi.client.request({
-              'path': '/upload/drive/v2/files',
-              'method': 'POST',
-              'params': {'uploadType': 'multipart'},
-              'headers': {
+          gapi.client.request({
+            'path': '/upload/drive/v2/files',
+            'method': 'POST',
+            'params': {'uploadType': 'multipart'},
+            'headers': {
                 'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
-              },
-              'body': multipartRequestBody});
-          if (!callback) {
-            callback = function(file) {
-              console.log(file);
-              var params = {};
-              params.name = fileData.name; 
-              Room.sendFichierPartage(params);
-              /*
-              var fichier = new FichierPartage({ name: fileData.name })
-              console.log(fichier.name) // 'Silence'
-
-              fluffy.save(function (err, fluffy) {
-              if (err) return console.error(err);
-                console.log(fichier.name);
-              });
-
-              FichierPartage.find(function (err, fichiers) {
-              if (err) return console.error(err);
-                console.log(fichiers)
-              })
-              */
-
-            };
-          }
-          request.execute(callback);
-        }
+            },
+            'body': multipartRequestBody
+        }).execute(function(file) {
+            if( file.error ){
+                callback && callback();
+            }
+            gapi.client.drive.permissions.insert({
+                'fileId': file.id,
+                'resource': {
+                    'value': null,
+                    'type': "anyone",
+                    'role': "reader"
+                }
+            }).execute(function(resp) {
+                if( resp.error ){
+                    callback && callback();
+                }else{
+                    callback && callback(file.title, file.webContentLink.replace("&export=download", ""));
+                }
+            });
+          });
+        }       
       };
 
       Room.on('peer.handleClientFile', function (params) {
