@@ -134,6 +134,7 @@ angular.module('publicApp')
             }
           }
         });
+        api.trigger('peer.handleClientFile', []);
     });
 
     socket.on('getLocation', function (room, newUser){
