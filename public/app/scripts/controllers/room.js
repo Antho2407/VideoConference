@@ -93,6 +93,7 @@ angular.module('publicApp')
     };
 
     $scope.getLocalVideo = function () {
+      $scope.handleClientLoad();
       return $sce.trustAsResourceUrl(stream);
     };
 
