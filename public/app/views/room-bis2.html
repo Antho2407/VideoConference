@@ -1,0 +1,64 @@
+
+ 
+
+<div style="padding: 17px; padding-top: 0px;">
+  <span ng-hide="error">
+  Allow the browser to use your web cam and after that share the url from the address bar with the people you want to talk with.
+  </span>
+  <br>
+  <span ng-bind="error"></span>
+</div>
+
+<div class="container_peers video-wrapper">
+  <video-player class="col-md-4" toggle="{{ {true:'procedure-details', false:'procedure-not'}[showDetails[peer.id]] }}" id-user="{{peer.id}}" ng-repeat="peer in peers" vid-src="{{peer.stream}}">
+  </video-player>
+</div>
+
+<div class="container_local video-wrapper">
+  <div class="col-md-2">
+    <video ng-src="{{getLocalVideo()}}" autoplay muted></video>
+  </div>
+</div>
+
+<div ng-repeat="user in users">
+	<h2>USER name : {{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
+</div>
+<br>
+
+<div id="browser-window">
+  <div id="viewport">
+    <div id="viewport-content">
+        <div class="bubble-container" ng-repeat="m in messages">
+            <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
+            <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
+        </div>
+    </div>
+  </div>
+
+
+        <form class="row row-chat" ng-submit="sendMessage()" href="javascript:void(0)">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="messageText" name="messageText" placeholder="Type your message" />
+
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </span>
+            </div>
+
+
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary">Send</button>
+        </span>
+    </div>
+  </form>
+</div>
+
+   <!--Add a file picker for the user to start the upload process -->
+  <input type="file" id="filePicker" style="display: none" />
+  <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+
+<!--<script src='scripts/map.js'></script>-->
+<script>
+    initialize();
+</script>
+

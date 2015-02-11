@@ -1,0 +1,738 @@
+/*
+
+Variables
+
+*/
+@background: #343838;
+@header-height: 7vh;
+@container-heigh : 93vh;
+@profil-height :33vh;
+@bursting-blue: #00DFFC;
+@dark-blue:#005F6B;
+@webcam-width : 34.7vh;
+@webcam-height : 26vh;
+
+
+*{
+	font-family: 'Lato', sans-serif;
+	margin: 0;
+	font-weight: 300;
+}
+
+h2{
+	padding:0;
+	margin:0;
+}
+html{
+	height: 100%;
+}
+body{
+	
+	min-height: 100%;
+}
+
+@font-face {
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'feathericons';
+	src:url('fonts/feathericons/feathericons.eot?-8is7zf');
+	src:url('fonts/feathericons/feathericons.eot?#iefix-8is7zf') format('embedded-opentype'),
+		url('fonts/feathericons/feathericons.woff?-8is7zf') format('woff'),
+		url('fonts/feathericons/feathericons.ttf?-8is7zf') format('truetype'),
+		url('fonts/feathericons/feathericons.svg?-8is7zf#feathericons') format('svg');
+}
+
+#viewport{
+	overflow:hidden;
+	height: 50vh;
+}
+
+#viewport-content{
+	position: relative;
+	bottom: -50vh;
+}
+
+.bubble-container{
+	display:block;
+	clear: both;
+	position:relative;
+	margin-bottom:1vh;
+	min-height:6vh;
+}
+
+.avatar{
+	border: 2px solid #ffffff;
+	box-sizing: initial;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.avatar,.avatar img{
+	width: 6vh;
+	height: 6vh;
+	-webkit-border-radius: 30px; /* Saf3+, Chrome */
+	border-radius: 30px; /* Opera 10.5, IE 9 */
+}
+
+
+.bubble{
+	padding: 3vh;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: rgba(255, 255, 255, 0.9);
+	color: #575858;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.avatar-left:before {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 10px 14px 10px 0;
+	border-color: transparent #ffffff;
+	display: block;
+	width: 0;
+	z-index: 1;
+	left: 61px;
+	top: 13px;
+}
+
+.avatar-right:before 
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 10px 0 10px 14px;
+	border-color: transparent #ffffff;
+	display: block;
+	width: 0;
+	z-index: 1;
+	right: 61px;
+	top: 13px;
+}
+
+/* Positionning of the avatar and the bubble */
+.avatar-left{
+	float: left;
+	width: 6vh;
+}
+
+.bubble-left{
+	overflow: hidden;
+	margin-left: 75px;
+}
+
+.avatar-right{
+	float: right;
+	width: 50px;
+}
+
+.bubble-right{
+	overflow: hidden;
+	margin-right: 75px;
+}
+
+
+
+/* 
+
+CONTAINER 
+
+*/
+
+.global_container {
+	margin: 0;
+	display: flex; /* or inline-flex */
+	width: 100%;
+	height: 100vh;
+	background-color:@background ;
+	flex-wrap:wrap;
+
+}
+.first_container{
+	display: flex; 
+	width: 15%;
+	height: @container-heigh;
+	background-color: @background;
+	flex-direction:column;
+}
+.secondary_container{
+	width: 65%;
+	height: @container-heigh;
+	background-color:@background;
+	flex-direction:column;
+}
+
+.last_container{
+	display: flex; 
+	width: 20%;
+	height: @container-heigh;
+	flex-direction:column;
+
+}
+/*
+
+Header
+
+*/
+.header{
+	display: flex;
+	width: 100%;
+	background: @background;
+	height: @header-height;
+	text-align: center;
+}
+
+.header h1{
+	font-size: 2vw;
+	margin: 0;
+	line-height:6vh;
+	width: 20vw;
+	border-bottom: 1px solid @bursting-blue;
+	color:#fff;
+	margin: 0 auto;
+}
+.header img{
+	height: 4vh;
+	width: 3vw;
+	display: inline-block;
+    vertical-align: middle;
+
+}
+
+.menu_icon{
+	width: 5vw;
+	min-height: 100%;
+}
+.menu_icon:before {    /* create a full-height inline block pseudo=element */
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;  /* vertical alignment of the inline element */
+    min-height: 7vh;
+}
+.menu_icon:hover{
+	background-color: #215A6D;
+	cursor: pointer;
+}
+
+.background-blue{
+	background-color: #215A6D;
+}
+.room_title{
+	width: 95vw;
+	text-align: center;
+	min-height: 100%;
+}
+
+
+
+#users{
+	height: 60vh;
+	overflow: auto;
+	text-align: center;
+	
+}
+
+#user{
+	height:@profil-height;
+	padding-left: 0.5vw;
+	
+}
+
+#video-user{
+	width:26.7vh;
+	height:20vh;
+	border-radius:5px;
+}
+
+#pseudo{
+	text-align: left;
+	width: 90%;
+	border-bottom: 1px solid @bursting-blue;
+	height: 5vh;
+	margin-bottom:1.5vh;
+}
+
+#pseudo h2{
+	font-size: 3vh;
+	line-height: 5vh;
+	color:#fff;
+}
+
+#user img{
+	width: 90%;
+	height: 25vh;
+	margin: 0 auto;
+	border-radius: 5px;
+}
+
+.files{
+	height: 62vh;
+	overflow: auto;
+}
+
+.files ul{
+	list-style-type: none; 
+	padding: 0; 
+}
+.files ul li{
+	display: block;
+	height: 8vh;
+	background-color:#2D2D29;
+	color: #DFECE6;
+
+}
+.files ul li p{
+	line-height: 8vh;
+	display: block;
+	padding: 0 1vw;
+	
+
+}
+.files ul li:hover{
+	background-color:#DFECE6;
+	cursor: pointer;
+	color: #2D2D29;
+}
+
+.header_files{
+	height: 8vh;
+	background-color:#215A6D;
+	text-align: center;
+}
+.header_files h2{
+	font-size: 1.5vw;
+	line-height: 8vh;
+	width: 100%;
+	color: #DFECE6;
+}
+
+
+
+#input_zone{
+	height: 15vh;
+}
+#input_zone textarea{
+	height: 15vh;
+	resize:none; 
+	width: 68%;
+	margin: 0;
+	padding: 0 1%;
+	border: 0;
+}
+.button_file{
+	width:30%;
+	height: 15vh;
+	background:url("../image/upload.png") no-repeat center;
+	background-size: auto;
+	float: right;
+	background-color: #2D2D29;
+}
+
+.button_file:hover{
+	background:url("../image/upload_hover.png") no-repeat center;
+	background-color: #DFECE6;
+	cursor: pointer;
+}
+#conference{
+	height: 93vh;
+}
+
+/*
+
+ CHAT DIV
+
+*/
+
+#map{
+	height:25vh;
+}
+#map_canvas{
+	height:20vh;
+	width:20vw;
+}
+
+.title{
+	text-align: right;
+	width: 95%;
+	border-bottom: 1px solid @bursting-blue;
+	height: 5vh;
+	margin-bottom:1.5vh;
+	padding-right: 0.5vw;
+}
+
+.title h2{
+	font-size: 3vh;
+	line-height: 5vh;
+	color:#fff;
+}
+
+.input{
+	height: 7vh;
+	padding-right: 0.5vw;
+}
+#chat-text{
+	height: 57vh;
+	padding-right: 0.5vw;
+	margin-bottom:1vh;
+	overflow:auto;
+}
+
+/*
+
+
+CHAT
+
+
+*/
+
+.right{
+	float: right;
+}
+a{
+  font-weight:bold;
+  color:#fff;
+  text-decoration:none;
+}
+.chat-box{
+	overflow: hidden;
+}
+.chat-box, .enter-message{
+  color:#a1a1a1;
+}
+.chat-box .message-box{
+  padding:18px 0 10px;
+  clear:both;
+}
+.message-box .picture{
+  float:left;
+  width:6vh;
+  display:block;
+  padding-right:0.5vw;
+}
+.picture img{
+  width:6vh;
+  height:6vh;
+  border-radius:5px;
+}
+.picture span{
+  font-weight:bold;
+  font-size:1.5vh;
+  clear:both;
+  display:block;
+  text-align:center;
+  margin-top:3px;
+}
+.message{
+  background:#fff;
+  display:inline-block;
+  padding:1.5vh;
+  border-radius:2px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.04);
+  position:relative;
+  width: 65%;
+}
+
+.message span{
+  color:#555;
+  font-weight:bold;
+  font-size: 0.75vw;
+}
+.message p{
+  padding-top:0.5vh;
+  font-size: 0.75vw;
+}
+.message-box.right-img .picture{
+  float:right;
+  padding:0;
+  padding-left:0.5vw;
+}
+.message-box.right-img .picture img{
+  float:right;
+}
+
+.form-2 input[type=text]{
+	border: 0;
+	padding: 0;
+    font-size: 2.5vh;
+    height: 5vh;
+    font-weight: 400;
+    display: block;
+    width: 75%;
+    padding-left: 1vh;
+    border-radius: 5px;
+    float: left;
+
+}
+
+.form-2 input[type=submit]{
+	padding: 0;
+    /* Size and position */
+    width: 20%;
+    height: 5vh;
+    float: right;
+    position: relative;
+
+    /* Styles */
+    box-shadow: inset 0 0.5vh rgba(255,255,255,0.3);
+    border-radius: 5px;
+    cursor: pointer;
+
+    /* Font styles */
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 1vw;
+    line-height: 5vh; /* Same as height */
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-2 input[type=submit] {
+    margin-left: 1%;
+    background: linear-gradient(#fbd568, #ffb347);
+    border: 1px solid #f4ab4c;
+    color: #996319;
+    text-shadow: 0 0.25vh rgba(255,255,255,0.3);
+}
+
+.form-2 input[type=text]:hover,
+.form-2 input[type=password]:hover {
+    border-color: #CCC;
+}
+
+.form-2 label:hover ~ input {
+    border-color: #CCC;
+}
+
+.form-2 input[type=text]:focus,
+.form-2 input[type=password]:focus {
+    border-color: #BBB;
+    outline: none; /* Remove Chrome's outline */
+}
+
+
+
+/* 
+
+Users 
+
+*/
+
+.grid {
+	position: relative;
+	clear: both;
+	margin: 0 auto;
+	max-width:90%;
+	list-style: none;
+	text-align: center;
+	overflow:hidden;
+}
+
+/* Common style */
+.grid figure {
+	position: relative;
+	float: left;
+	overflow: hidden;
+	margin: 1% 1%;
+	width: @webcam-width;
+	height: @webcam-height;
+	background: #3085a3;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.grid figure img {
+	position: relative;
+	display: block;
+	height: @webcam-height;
+	width: @webcam-width;
+	opacity: 0.8;
+	border-radius: 5px;
+}
+
+.video-users{
+	height: @webcam-height;
+	width: @webcam-width;
+	opacity: 1;
+	border-radius: 5px;
+}
+
+.procedure-details {
+    max-height: @webcam-height;
+    max-width: @webcam-width;
+    overflow:hidden;
+    transition:all 500ms;
+}
+
+.procedure-not {
+    max-height: 0px;
+    max-width: 0px;
+    transition:all 500ms;
+}
+
+.grid figure figcaption {
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 1.25em;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	border-radius: 5px;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+	pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure figcaption > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: @webcam-width;
+	height: @webcam-height;
+}
+
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+.grid figure figcaption > a {
+	z-index: 1000;
+	text-indent: 200%;
+	white-space: nowrap;
+	font-size: 0;
+	opacity: 0;
+}
+
+.grid figure h2 {
+	word-spacing: -0.15em;
+	font-weight: 300;
+}
+
+.grid figure h2 span {
+	font-weight: 800;
+}
+
+.grid figure h2,
+.grid figure p {
+	margin: 0;
+}
+
+.grid figure p {
+	letter-spacing: 1px;
+	font-size: 68.5%;
+}
+
+/*-----------------*/
+/***** Hera *****/
+/*-----------------*/
+
+figure.effect-hera {
+	background: #303fa9;
+}
+
+figure.effect-hera h2 {
+	font-size: 2.3vh;
+}
+i{
+	font-size: 8vh;
+}
+figure.effect-hera p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(-50%,-50%,0);
+	transform: translate3d(-50%,-50%,0);
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+figure.effect-hera h2{
+	position: absolute;
+	top: 90%;
+	left: 25%;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(-50%,-50%,0);
+	transform: translate3d(-50%,-50%,0);
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+figure.effect-hera figcaption::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 15vh;
+	height: 15vh;
+	border: 2px solid #fff;
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(0,0,1);
+	transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(0,0,1);
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+figure.effect-hera p {
+	width: 15vh;
+	text-transform: none;
+	font-size: 121%;
+	line-height: 2;
+}
+
+figure.effect-hera p a {
+	color: #fff;
+}
+
+figure.effect-hera p a:hover,
+figure.effect-hera p a:focus {
+	opacity: 0.6;
+}
+
+figure.effect-hera p a i {
+	opacity: 0;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+}
+
+figure.effect-hera p a:first-child i {
+	-webkit-transform: translate3d(-60px,-60px,0);
+	transform: translate3d(-60px,-60px,0);
+}
+
+figure.effect-hera p a:nth-child(2) i {
+	-webkit-transform: translate3d(60px,-60px,0);
+	transform: translate3d(60px,-60px,0);
+}
+
+figure.effect-hera p a:nth-child(3) i {
+	-webkit-transform: translate3d(-60px,60px,0);
+	transform: translate3d(-60px,60px,0);
+}
+
+figure.effect-hera p a:nth-child(4) i {
+	-webkit-transform: translate3d(60px,60px,0);
+	transform: translate3d(60px,60px,0);
+}
+
+figure.effect-hera:hover figcaption::before {
+	opacity: 1;
+	-webkit-transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(1,1,1);
+	transform: translate3d(-50%,-50%,0) rotate3d(0,0,1,-45deg) scale3d(1,1,1);
+}
+
+figure.effect-hera:hover h2 {
+	opacity: 0;
+	-webkit-transform: translate3d(-50%,-50%,0) scale3d(0.8,0.8,1);
+	transform: translate3d(-50%,-50%,0) scale3d(0.8,0.8,1);
+}
+
+figure.effect-hera:hover p i:empty {
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0); /* just because it's stronger than nth-child */
+	opacity: 1;
+}

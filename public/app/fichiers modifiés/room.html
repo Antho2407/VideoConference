@@ -1,0 +1,99 @@
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+      <a href="#">Room 1</a>
+      <a href="#">Room 2</a>
+      <a href="#">Room 3</a>
+      <a href="#">Room 4</a>
+    </nav>
+    <div class="global_container">
+      <div class="header">
+        
+        <div class="room_title">
+          <h1>ROOM TITLE</h1>
+        </div>
+        <div class="menu_icon" id="showRightPush">
+          <img src="images/menu.png" alt="menu"/>
+        </div>
+        
+      </div>
+      <div class="first_container">
+        <div id="user" >
+          <div id="pseudo"><h2>Hugo</h2></div>
+          <video id="video-user" ng-src="{{getLocalVideo()}}" autoplay muted></video>
+        </div>
+      <div id="users" >
+      <div ng-repeat="user in users">
+          <h2>USER name : {{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
+          </div>
+          <br>
+          
+      </div>
+        
+        
+        
+      </div>
+      <div class="secondary_container">
+        <div id="conference">
+        <div class="grid">
+        <div ng-repeat="peer in peers"> 
+         <video-player class="video-users" toggle="{{ {true:'procedure-details', false:'procedure-not'}[showDetails[peer.id]] }}" name-user="{{peer.name}}" id-user="{{peer.id}}" vid-src="{{peer.stream}}">
+      </video-player>
+      </div>
+        </div>
+          
+        </div>
+      </div>
+
+      <div class="last_container">
+      <div class="title"><h2>Map</h2></div>
+      <div id="map">
+        <div id="map_canvas"></div>
+      </div>
+      <div class="title"><h2>Chat</h2></div>
+        <div id="chat-text">
+          <div class="chat-box">
+            
+
+
+
+            <div id="viewport">
+              <div id="viewport-content">
+                  <div class="bubble-container" ng-repeat="m in messages">
+                      <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
+                      <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
+                  </div>
+              </div>
+            </div>
+            <!--
+              <div class="bubble-container" ng-repeat="m in messages">
+              <div class="message-box {{m.side}}-img">
+                <div class="picture">
+                  <img src=""{{m.avatar}}"" title="user name"/>
+                 
+                </div>
+                <div class="message {{m.side}}">
+                  <span>Bobby Giangeruso</span>
+                  <p>{{m.text}}</p>
+                </div>
+              </div>
+            </div>-->
+        </div>
+        </div>
+        <div class="input" ng-submit="sendMessage()" href="javascript:void(0)">
+          <form class="form-2">
+          <input type="text" ng-model="messageText" name="messageText" placeholder="Message">
+          <input type="submit" name="submit" value="Send">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      initialize();
+    </script>
+    <script src="scripts/navbar.js"></script>
+    <script src="scripts/classie.js"></script>
+  
+
+    
+
+      
