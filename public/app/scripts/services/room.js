@@ -17,6 +17,7 @@ angular.module('publicApp')
         stream, currentName;
 
     $rootScope.users = [];
+    $rootScope.files = [];
 
     function getPeerConnection(id, name) {
 
@@ -158,9 +159,18 @@ angular.module('publicApp')
     });
 
     socket.on('newFichierPartage',function(data){
-      console.log("cote client : " + data[0].name);
-      console.log("cote client : " + data[0].url);
-      console.log("cote client : " + data[0].roomId);
+      console.log("cote client : " + data.name);
+      console.log("cote client : " + data.url);
+      console.log("cote client : " + data.roomId);
+
+      $rootScope.files.push({
+            name: data.name,
+            url: data.url,
+            roomId : data.roomId
+            });
+       if (!$rootScope.$$digest) {
+          $rootScope.$apply();
+        }
     });
 
   };
@@ -183,11 +193,12 @@ angular.module('publicApp')
       joinRoom: function (r, pseudo) {
         socket.emit('registerPseudo', pseudo); 
         if (!connected) {
-          socket.emit('init', { room: r }, function (roomid, id, name, tabUsers) {
+          socket.emit('init', { room: r }, function (roomid, id, name, tabUsers, tabFiles) {
             currentId = id;
             roomId = roomid;
             currentName = name;
             $rootScope.users = tabUsers;
+            $rootScope.files = tabFiles;
           });
           connected = true;
         }
@@ -195,12 +206,13 @@ angular.module('publicApp')
       createRoom: function (pseudo) {
         socket.emit('registerPseudo', pseudo); 
         var d = $q.defer();
-        socket.emit('init', null, function (roomid, id, name, tabUsers) {
+        socket.emit('init', null, function (roomid, id, name, tabUsers, tabFiles) {
           d.resolve(roomid);
           roomId = roomid;
           currentId = id;
           currentName = name;
           $rootScope.users = tabUsers;
+          $rootScope.files = tabFiles;
 
           connected = true;
         });

@@ -12,9 +12,12 @@
       </div>    
       </div>
       <div id="files">
-      <div class="title-left"><h2>Files</h2></div>
+      <div class="title-left"><h2>Files</h2></div> 
          <input type="file" id="filePicker" style="display: none" />
           <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+          <div ng-repeat="file in files">
+            <a href="{{file.url}}" download>{{file.name}}</a>
+      </div>
       </div>  
         
       </div>
