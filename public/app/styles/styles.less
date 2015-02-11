@@ -218,8 +218,23 @@ Header
 	height:4vh;
 	border-bottom: 1px solid #008C9E;
 	width:95%;
+}
+
+.users-list:hover{
+	cursor:pointer;
+}
+
+.users-list:hover h2{
+	color: #ccc;
 
 }
+
+.users-list i{
+	float:right;
+	line-height:4vh;
+	
+}
+
 .users-list h2{
 	color:#fff;
 	text-align:left;
@@ -264,10 +279,21 @@ Header
 
 #files{
 	height: 35vh;
-	overflow: auto;
 	padding-left:0.5vw;
 }
-
+#files-list{
+	height:25vh; 
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+.file-elem{
+	height:4vh;
+	border-bottom: 1px solid #008C9E;
+	width:95%;	
+}
+.file-elem a{
+	cursor:pointer;
+}
 
 .header_files{
 	height: 8vh;
@@ -720,3 +746,4 @@ figure.effect-hera:hover p i:empty {
 	transform: translate3d(0,0,0); /* just because it's stronger than nth-child */
 	opacity: 1;
 }
+

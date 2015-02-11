@@ -7,18 +7,23 @@
       
       <div id="users" >
       <div class="title-left"><h2>Users list</h2></div>
-      <div ng-repeat="user in users" class="users-list">
-          <h2>{{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
+      <div  ng-repeat="user in users" ng-click="togg(user.id)">
+      <div class="users-list">
+          <h2>{{user.name}} <i class="fa fa-eye"  id="{{user.id}}"  ></i></h2>
+      </div>
       </div>    
       </div>
       <div id="files">
-      <div class="title-left"><h2>Files</h2></div> 
-         <input type="file" id="filePicker" style="display: none" />
-          <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
-          <div ng-repeat="file in files">
+      <div class="title-left"><h2>Files</h2></div>
+      <div id="files-list" >
+       <div class="file-elem"ng-repeat="file in files">
             <a href="{{file.url}}" download>{{file.name}}</a>
       </div>
+      </div>
+         <input type="file" id="filePicker" style="display: none" />
+          <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
       </div>  
+
         
       </div>
       <div class="secondary_container">
@@ -54,19 +59,6 @@
                   </div>
               </div>
             </div>
-            <!--
-              <div class="bubble-container" ng-repeat="m in messages">
-              <div class="message-box {{m.side}}-img">
-                <div class="picture">
-                  <img src=""{{m.avatar}}"" title="user name"/>
-                 
-                </div>
-                <div class="message {{m.side}}">
-                  <span>Bobby Giangeruso</span>
-                  <p>{{m.text}}</p>
-                </div>
-              </div>
-            </div>-->
         </div>
         </div>
         <div class="input" ng-submit="sendMessage()" href="javascript:void(0)">
