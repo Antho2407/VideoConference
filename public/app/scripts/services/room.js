@@ -140,7 +140,6 @@ angular.module('publicApp')
     });
 
     socket.on('newPositions', function (positions){
-      displayCoords.innerHTML = "Positions des clients <br />" ;
       positions.forEach(displayCoordinates);
     });
 
@@ -149,8 +148,8 @@ angular.module('publicApp')
     });
 
     // Occurs when we receive chat messages
-    socket.on('messageSent', function (data){
-      api.trigger('peer.messageSent', [data]);
+    socket.on('messageSent', function (data, name){
+      api.trigger('peer.messageSent', [{data:data, name:name}]);
     });
 
   };
@@ -162,13 +161,14 @@ angular.module('publicApp')
             name: name
             });
       },
-      sendMessage : function (message) {
-            socket.emit('sendMessageToRoom', message);
+      sendMessage : function (message, name) {
+            socket.emit('sendMessageToRoom', message, currentName);
       },
       sendFichierPartage : function (params) {
             socket.emit('sendFichierToRoom', params);
       },
-      joinRoom: function (r) {
+      joinRoom: function (r, pseudo) {
+        socket.emit('registerPseudo', pseudo); 
         if (!connected) {
           socket.emit('init', { room: r }, function (roomid, id, name, tabUsers) {
             currentId = id;
@@ -179,7 +179,8 @@ angular.module('publicApp')
           connected = true;
         }
       },
-      createRoom: function () {
+      createRoom: function (pseudo) {
+        socket.emit('registerPseudo', pseudo); 
         var d = $q.defer();
         socket.emit('init', null, function (roomid, id, name, tabUsers) {
           d.resolve(roomid);

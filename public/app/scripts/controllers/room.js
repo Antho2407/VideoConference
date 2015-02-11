@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room) {
+  .controller('RoomCtrl', function ($sce, VideoStream, $location, $routeParams, $scope, Room, Connect) {
 
     if (!window.RTCPeerConnection || !navigator.getUserMedia) {
       $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
@@ -16,6 +16,7 @@ angular.module('publicApp')
     }
 
     var stream;
+    var pseudo = Connect.get();
 
     VideoStream.get()
     .then(function (s) {
@@ -23,13 +24,13 @@ angular.module('publicApp')
       Room.init(stream);
       stream = URL.createObjectURL(stream);
 
-      if (!$routeParams.roomId) {
-        Room.createRoom()
+       if (!$routeParams.roomId) {
+        Room.createRoom(pseudo)
         .then(function (roomId) {
           $location.path('/room/' + roomId);
         });
       } else {
-        Room.joinRoom($routeParams.roomId);
+        Room.joinRoom($routeParams.roomId, pseudo);
       }
     }, function () {
       $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
@@ -59,11 +60,10 @@ angular.module('publicApp')
       });
     });
 
-    Room.on('peer.messageSent', function (data) {
-      console.log('MESSAGE SENT' + data);
+    Room.on('peer.messageSent', function (params) {
      $scope.messages.push({
             avatar: "../images/avatar.png",
-            text: data,
+            text: params.name + " : " + params.data,
             side: 'left'
         });         
       $scope.$apply();     
@@ -78,7 +78,7 @@ angular.module('publicApp')
 
       $scope.messages.push({
            avatar: "../images/yeoman.png",
-            text: $scope.messageText,
+            text: "MOI MEME : " + $scope.messageText,
             side: 'right'
         });         
       $scope.$apply();     
