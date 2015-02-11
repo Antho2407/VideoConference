@@ -10,12 +10,13 @@ angular.module('publicApp')
   .directive('videoPlayer', function ($sce) {
     var muted = false;
     return {
-      template: '<div class="{{toggle}}"><video id="video{{idUser}}" ng-src="{{trustSrc()}}" autoplay></video><div class="video_controls"><a href="javascript:void(0)" ng-click="muteVideo()"><img src="images/" alt="RSS" style="border:none" /></a></div></div>',
+      template: '<figure class="{{toggle}} effect-hera"><video id="video{{idUser}}" class="video-users" ng-src="{{trustSrc()}}" autoplay></video> <figcaption> <h2>{{nameUser}}</h2> <p><a href="javascript:void(0)" ng-click="muteVideo()" ><i class="fa fa-volume-off"></i></a></p></figcaption></figure>',
       restrict: 'E',
       replace: true,
       scope: {
         vidSrc: '@',
         idUser: '@',
+        nameUser: '@',
         toggle: '@'
       },
       link: function (scope) {

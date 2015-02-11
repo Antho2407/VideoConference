@@ -1,54 +1,99 @@
-<div style="padding: 17px; padding-top: 0px;">
-  <span ng-hide="error">
-  Allow the browser to use your web cam and after that share the url from the address bar with the people you want to talk with.
-  </span>
-  <br>
-  <span ng-bind="error"></span>
-</div>
-<div class="container_peers video-wrapper">
-  <video-player class="col-md-4" toggle="{{ {true:'procedure-details', false:'procedure-not'}[showDetails[peer.id]] }}" id-user="{{peer.id}}" ng-repeat="peer in peers" vid-src="{{peer.stream}}">
-  </video-player>
-</div>
-
-<div class="container_local video-wrapper">
-  <div class="col-md-2">
-    <video ng-src="{{getLocalVideo()}}" autoplay muted></video>
-  </div>
-</div>
-
-<div ng-repeat="user in users">
-	<h2>USER name : {{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
-</div>
-<br>
-
-<div id="browser-window">
-  <div id="viewport">
-    <div id="viewport-content">
-        <div class="bubble-container" ng-repeat="m in messages">
-            <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
-            <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+      <a href="#">Room 1</a>
+      <a href="#">Room 2</a>
+      <a href="#">Room 3</a>
+      <a href="#">Room 4</a>
+    </nav>
+    <div class="global_container">
+      <div class="header">
+        
+        <div class="room_title">
+          <h1>ROOM TITLE</h1>
         </div>
-    </div>
-  </div>
-
-
-  <form class="row row-chat" ng-submit="sendMessage()" href="javascript:void(0)">
-      <div class="input-group">
-          <input type="text" class="form-control" ng-model="messageText" name="messageText" placeholder="Type your message" />
-          <span class="input-group-btn">
-              <button type="submit" class="btn btn-primary">Send</button>
-          </span>
+        <div class="menu_icon" id="showRightPush">
+          <img src="images/menu.png" alt="menu"/>
+        </div>
+        
       </div>
-  </form>
-</div>
+      <div class="first_container">
+        <div id="user" >
+          <div id="pseudo"><h2>Hugo</h2></div>
+          <video id="video-user" ng-src="{{getLocalVideo()}}" autoplay muted></video>
+        </div>
+      <div id="users" >
+      <div ng-repeat="user in users">
+          <h2>USER name : {{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
+          </div>
+          <br>
+          
+      </div>
+        
+        
+        
+      </div>
+      <div class="secondary_container">
+        <div id="conference">
+        <div class="grid">
+        <div ng-repeat="peer in peers"> 
+         <video-player class="video-users" toggle="{{ {true:'procedure-details', false:'procedure-not'}[showDetails[peer.id]] }}" name-user="{{peer.name}}" id-user="{{peer.id}}" vid-src="{{peer.stream}}">
+      </video-player>
+      </div>
+        </div>
+          
+        </div>
+      </div>
 
-   <!--Add a file picker for the user to start the upload process -->
-  <input type="file" id="filePicker" style="display: none" />
-  <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+      <div class="last_container">
+      <div class="title"><h2>Map</h2></div>
+      <div id="map">
+        <div id="map_canvas"></div>
+      </div>
+      <div class="title"><h2>Chat</h2></div>
+        <div id="chat-text">
+          <div class="chat-box">
+            
 
 
-<!--<script src='scripts/map.js'></script>-->
-<script>
-    initialize();
-</script>
 
+            <div id="viewport">
+              <div id="viewport-content">
+                  <div class="bubble-container" ng-repeat="m in messages">
+                      <div class="avatar avatar-{{m.side}}"><img src="{{m.avatar}}" /></div>
+                      <div class="bubble bubble-{{m.side}}">{{m.text}}</div>
+                  </div>
+              </div>
+            </div>
+            <!--
+              <div class="bubble-container" ng-repeat="m in messages">
+              <div class="message-box {{m.side}}-img">
+                <div class="picture">
+                  <img src=""{{m.avatar}}"" title="user name"/>
+                 
+                </div>
+                <div class="message {{m.side}}">
+                  <span>Bobby Giangeruso</span>
+                  <p>{{m.text}}</p>
+                </div>
+              </div>
+            </div>-->
+        </div>
+        </div>
+        <div class="input" ng-submit="sendMessage()" href="javascript:void(0)">
+          <form class="form-2">
+          <input type="text" ng-model="messageText" name="messageText" placeholder="Message">
+          <input type="submit" name="submit" value="Send">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      initialize();
+    </script>
+    <script src="scripts/navbar.js"></script>
+    <script src="scripts/classie.js"></script>
+  
+
+    
+
+      
