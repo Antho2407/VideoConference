@@ -21,6 +21,10 @@ function getLocation(newUser) {
 	}
 }
 
+function removePosition(index){
+	
+}
+
 function displayCoordinates(element, index, array) {
 	nbLocations ++;
 	showOnGoogleMap(new google.maps.LatLng(element.latitude,

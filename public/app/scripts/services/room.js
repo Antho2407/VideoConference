@@ -101,6 +101,9 @@ angular.module('publicApp')
       });
       socket.on('peer.disconnected', function (data) {
         api.trigger('peer.disconnected', [data]);
+        $rootScope.users = $rootScope.users.filter(function (u) {
+          return u.id !== data;
+        });
         if (!$rootScope.$$digest) {
           $rootScope.$apply();
         }
