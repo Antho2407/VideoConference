@@ -1,37 +1,25 @@
-    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-      <a href="#">Room 1</a>
-      <a href="#">Room 2</a>
-      <a href="#">Room 3</a>
-      <a href="#">Room 4</a>
-    </nav>
     <div class="global_container">
-      <div class="header">
-        
-        <div class="room_title">
-          <h1>ROOM TITLE</h1>
-        </div>
-        <div class="menu_icon" id="showRightPush">
-          <img src="images/menu.png" alt="menu"/>
-        </div>
-        
-      </div>
       <div class="first_container">
         <div id="user" >
           <div id="pseudo"><h2>Hugo</h2></div>
           <video id="video-user" ng-src="{{getLocalVideo()}}" autoplay muted></video>
         </div>
+      
       <div id="users" >
-      <div ng-repeat="user in users">
-          <h2>USER name : {{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
-          </div>
-          <br>
-          
+      <div class="title-left"><h2>Users list</h2></div>
+      <div ng-repeat="user in users" class="users-list">
+          <h2>{{user.name}} <button class="btn btn-default" id="{{user.id}}"  ng-click="togg(user.id)">Hide</button></h2>
+      </div>    
       </div>
-        
-        
+      <div id="files">
+      <div class="title-left"><h2>Files</h2></div>
+         <input type="file" id="filePicker" style="display: none" />
+          <input type="button" id="authorizeButton" style="display: none" value="Authorize" />
+      </div>  
         
       </div>
       <div class="secondary_container">
+      <div class="title"><h2>Room</h2></div>
         <div id="conference">
         <div class="grid">
         <div ng-repeat="peer in peers"> 
