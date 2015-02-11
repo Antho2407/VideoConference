@@ -8,6 +8,7 @@ var currentRoomMap;
 var socketMap;
 
 var user;
+var markers = {};
 
 function getLocation(newUser) {
 	if (navigator.geolocation) {
@@ -21,20 +22,23 @@ function getLocation(newUser) {
 	}
 }
 
-function removePosition(index){
-	
+function removePosition(id){
+	var markerToBeRemoved = markers[id][0];
+	var infoToBeRemoved = markers[id][1];
+	markerToBeRemoved.setMap(null);
+	infoToBeRemoved.setMap(null);
 }
 
 function displayCoordinates(element, index, array) {
 	nbLocations ++;
 	showOnGoogleMap(new google.maps.LatLng(element.latitude,
-			element.longitude), element.nameClient);
+			element.longitude), element.idClient, element.nameClient);
 }
 
 function newCoordinates(position) {
 	nbLocations ++;
 	showOnGoogleMap(new google.maps.LatLng(position.latitude,
-			position.longitude), position.nameClient);
+			position.longitude), position.idClient, position.nameClient);
 }
 
 // Called when position is available
@@ -60,7 +64,7 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 }
 
-function showOnGoogleMap(latlng, name) {
+function showOnGoogleMap(latlng, id, name) {
 
 	geocoder.geocode({
 		'latLng' : latlng
@@ -74,6 +78,10 @@ function showOnGoogleMap(latlng, name) {
 							map : map,
 							draggable: true,
 						});
+
+						markers[id] = new Array();
+    					markers[id].push(marker);
+						console.log("DISPLAY MARKER " + name);
 
 						var boxText = document.createElement("div");
 				        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: grey; padding: 5px;";
@@ -101,6 +109,8 @@ function showOnGoogleMap(latlng, name) {
 
 						var info_box = new InfoBubble(myOptions);
 						info_box.open(map, marker);
+
+						markers[id].push(info_box);
 
 						//info_box.setContent("Position de " + name + " et sa petite adresse : \n" + results[1].formatted_address);
 						//infowindow.open(map, marker);
