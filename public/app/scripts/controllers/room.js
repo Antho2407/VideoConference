@@ -108,15 +108,10 @@ angular.module('publicApp')
         return $sce.trustAsResourceUrl(vidSrc);
       };
 
+
+
       var CLIENT_ID = '779716103918-mjv16b6fbcp4afotr13pecgnc95aq2at.apps.googleusercontent.com';
       var SCOPES = 'https://www.googleapis.com/auth/drive';
-
-      /**
-       * Called when the client library is loaded to start the auth flow.
-       */
-      $scope.handleClientLoad = function() {
-        window.setTimeout(checkAuth, 1);
-      }
 
       /**
        * Check if the current user has authorized the application.
@@ -124,8 +119,15 @@ angular.module('publicApp')
       $scope.checkAuth = function() {
         gapi.auth.authorize(
             {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
-            handleAuthResult);
-      }
+            $scope.handleAuthResult);
+      };
+
+      /**
+       * Called when the client library is loaded to start the auth flow.
+       */
+      $scope.handleClientLoad = function() {
+        window.setTimeout($scope.checkAuth, 1);
+      };
 
       /**
        * Called when authorization server replies.
@@ -140,17 +142,17 @@ angular.module('publicApp')
         if (authResult && !authResult.error) {
           // Access token has been successfully retrieved, requests can be sent to the API.
           filePicker.style.display = 'block';
-          filePicker.onchange = uploadFile;
+          filePicker.onchange = $scope.uploadFile;
         } else {
           // No access token could be retrieved, show the button to start the authorization flow.
           authButton.style.display = 'block';
           authButton.onclick = function() {
               gapi.auth.authorize(
                   {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-                  handleAuthResult);
+                  $scope.handleAuthResult);
           };
         }
-      }
+      };
 
       /**
        * Start the file upload.
@@ -160,9 +162,9 @@ angular.module('publicApp')
       $scope.uploadFile = function(evt) {
         gapi.client.load('drive', 'v2', function() {
           var file = evt.target.files[0];
-          insertFile(file);
+          $scope.insertFile(file);
         });
-      }
+      };
 
 
         /**
@@ -178,6 +180,7 @@ angular.module('publicApp')
 
         var reader = new FileReader();
         reader.readAsBinaryString(fileData);
+        
         reader.onload = function(e) {
           var contentType = fileData.type || 'application/octet-stream';
           var metadata = {
@@ -231,4 +234,9 @@ angular.module('publicApp')
           request.execute(callback);
         }
       };
+
+      Room.on('peer.handleClientFile', function (params) {
+        console.log("peer.handlefile");
+        $scope.handleClientLoad();
+      });
   });
